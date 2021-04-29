@@ -17,6 +17,9 @@ jobs:
     - name: Change directory
       run: cd DotnetTemplate.Web
       
+    - name: Change directory
+      run: pwd
+      
     - name: Install npm # **From the DotnetTemplate.Web folder 
       run: npm install     
       

@@ -1,0 +1,51 @@
+pipeline {
+    agent {
+		docker {image 'node:14-alpine'}
+	}
+
+    stages {
+        stage('Builds the C# code') {
+		    agent {
+				docker {image 'mcr.microsoft.com/dotnet/sdk:5.0'}
+			}
+            steps {
+				dotnet build
+            }
+        }
+        stage('Runs the C# tests.') {
+		    agent {
+				docker {image 'mcr.microsoft.com/dotnet/sdk:5.0'}
+			}
+            steps {
+				dotnet test
+            }
+        }
+        stage('Builds the typescript code') {
+		    agent {
+				docker {image 'node:14-alpine'}
+			}
+            steps {
+				cd ./DotnetTemplate.Web;
+				npm run build
+            }
+        }
+        stage('Runs the linter on the typescript code') {
+		    agent {
+				docker {image 'node:14-alpine'}
+			}
+            steps {
+				cd ./DotnetTemplate.Web;
+				npm run lint
+            }
+        }
+        stage('Runs the typescript tests') {
+		    agent {
+				docker {image 'node:14-alpine'}
+			}
+            steps {
+				cd ./DotnetTemplate.Web;
+				npm t
+            }
+        }		
+    }
+}

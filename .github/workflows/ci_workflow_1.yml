@@ -14,20 +14,18 @@ jobs:
     - name: Run the C# tests
       run: dotnet test
       
-    - name: Change directory
-      run: cd DotnetTemplate.Web
-      
-    - name: Change directory
-      run: pwd
-      
     - name: Install npm # **From the DotnetTemplate.Web folder 
+      working-directory: ./DotnetTemplate.Web
       run: npm install     
       
     - name: Build the typescript code # **From the DotnetTemplate.Web folder 
+      working-directory: ./DotnetTemplate.Web
       run: npm run build
     
     - name: Run the linter on the typescript code # **From the DotnetTemplate.Web folder 
+      working-directory: ./DotnetTemplate.Web
       run: npm run lint
   
     - name: Runs the typescript tests # **From the DotnetTemplate.Web folder 
+      working-directory: ./DotnetTemplate.Web
       run: npm t

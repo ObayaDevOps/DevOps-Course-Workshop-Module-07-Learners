@@ -8,7 +8,23 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Hello world
-      uses: actions/hello-world-javascript-action@v1.1 # Name of the action. This uses https://github.com/actions/hello-world-javascript-action
-      with:                                            # This section is needed if you need to pass arguments to the action
-        who-to-greet: 'Mona the Octocat'
+    - name: Build the C# code
+      run: dotnet build
+      
+    - name: Run the C# tests
+      run: dotnet test
+      
+    - name: Change directory
+      run: cd DotnetTemplate.Web
+      
+    - name: Install npm # **From the DotnetTemplate.Web folder 
+      run: npm install     
+      
+    - name: Build the typescript code # **From the DotnetTemplate.Web folder 
+      run: npm run build
+    
+    - name: Run the linter on the typescript code # **From the DotnetTemplate.Web folder 
+      run: npm run lint
+  
+    - name: Runs the typescript tests # **From the DotnetTemplate.Web folder 
+      run: npm t
